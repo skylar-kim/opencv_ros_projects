@@ -11,23 +11,21 @@ import sys
 class VideoListener:
   
   def __init__(self):
-    # initialize node
-    rospy.init_node('tennis_ball_listener', anonymous=True)
+    # initialize node for reading from usb camera
+    rospy.init_node('ball_cam_tracker', anonymous=True)
 
     # make a bridge object that makes the transformation between ROS and OpenCV formats
     self.bridge = CvBridge()
 
     # so we can use the BallTracker class
     self.tracker = BallTracker()
+    
+    # subscribe to the topic where the usb camera footage is published
+    self.videoSub = rospy.Subscriber("/usb_cam/image_raw",Image, self.image_callback)
 
-  def tennis_ball_listener(self):
+    # declare where to capture the video which is 0
+    self.cvVideoStream = cv2.VideoCapture(0)
 
-    image_sub = rospy.Subscriber("/tennis_ball_image",Image, self.image_callback)
-    try:
-      rospy.spin()
-    except KeyboardInterrupt:
-      print("Shutting down")
-      pass
 
   def image_callback(self, ros_image):
     print 'got an image'
@@ -57,4 +55,8 @@ class VideoListener:
 
 if __name__ == '__main__':
     listener = VideoListener()
-    listener.tennis_ball_listener()
+
+    try:
+      rospy.spin()
+    except KeyboardInterrupt:
+      print("Exit")

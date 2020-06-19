@@ -11,7 +11,7 @@ from cv_bridge import CvBridge, CvBridgeError
 class VideoTalker:
 
 	def __init__(self):
-		rospy.init_node('tennis_ball_image', anonymous=True) 
+		rospy.init_node('tennis_ball_publisher', anonymous=True) 
 
 		# declare publisher
 		self.videoPublisher = rospy.Publisher('tennis_ball_image', Image, queue_size=10)
