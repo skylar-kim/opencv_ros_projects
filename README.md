@@ -24,4 +24,6 @@ In a third terminal run the following:
 ```
 $ rosrun opencv_ros_projects ./tennis_ball_publisher.py
 ```
-Your screen should look like this:  a
+Your screen should look like this:  
+![Screen](images/tennis_ball.PNG)
+
