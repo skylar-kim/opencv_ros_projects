@@ -4,8 +4,8 @@ OpenCV Projects for ROS is a package that has python scripts that can be run on 
 
 ## Installation
 ### Requirements
-[ROS Kinetic Kame](http://wiki.ros.org/kinetic/Installation)
-Python 2.7.12
+[ROS Kinetic Kame](http://wiki.ros.org/kinetic/Installation)  
+Python 2.7.12  
 [OpenCV](https://docs.opencv.org/3.4/d2/de6/tutorial_py_setup_in_ubuntu.html)
 
 ## Background
