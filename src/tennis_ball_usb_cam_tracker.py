@@ -14,17 +14,15 @@ class VideoListener:
     # initialize node for reading from usb camera
     rospy.init_node('ball_cam_tracker', anonymous=True)
 
-    # make a bridge object that makes the transformation between ROS and OpenCV formats
-    self.bridge = CvBridge()
+    # subscribe to the topic where the usb camera footage is published
+    self.videoSub = rospy.Subscriber("/usb_cam/image_raw", Image, self.image_callback)
 
     # so we can use the BallTracker class
     self.tracker = BallTracker()
-    
-    # subscribe to the topic where the usb camera footage is published
-    self.videoSub = rospy.Subscriber("/usb_cam/image_raw",Image, self.image_callback)
 
-    # declare where to capture the video which is 0
-    self.cvVideoStream = cv2.VideoCapture(0)
+    # make a bridge object that makes the transformation between ROS and OpenCV formats
+    self.bridge = CvBridge()
+
 
 
   def image_callback(self, ros_image):
@@ -47,16 +45,21 @@ class VideoListener:
     contours = self.tracker.getContours(binary_image_mask)
 
     # draw the contours on the ball
-    self.tracker.draw_ball_contour(binary_image_mask, cv_image, contours)
+    self.tracker.draw_ball_contour(cv_image, contours)
+
+    cv2.imshow("CV Stream", cv_image)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
+      self.videoSub.unregister()
       rospy.signal_shutdown("Exit Code")
 
+def main():
+  listener = VideoListener()
+
+  try:
+    rospy.spin()
+  except KeyboardInterrupt:
+    print("Exit")
 
 if __name__ == '__main__':
-    listener = VideoListener()
-
-    try:
-      rospy.spin()
-    except KeyboardInterrupt:
-      print("Exit")
+    main()
