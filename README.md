@@ -53,5 +53,6 @@ Run the following in another terminal (3rd terminal):
 ```
 $ rosrun opencv_ros_projects tennis_ball_usb_cam_tracker.py
 ```
+Your screen should look like the following:
 ![Screen](images/usb_cam.PNG)
 
