@@ -23,7 +23,8 @@ class VideoStreamer:
 
     def image_callback(self, ros_image):
     	print 'got an image'
-
+        global face_cascade
+        
         #convert ros_image into an opencv-compatible image
         try:
             cv_image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
@@ -50,6 +51,8 @@ class VideoStreamer:
 
 
 def main():
+    
+
     streamer = VideoStreamer()
 
     try:
